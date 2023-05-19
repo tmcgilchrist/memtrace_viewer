@@ -19,3 +19,29 @@ with the Memtrace library.
 See [this blog
 post](https://blog.janestreet.com/finding-memory-leaks-with-memtrace/)
 for instructions on how to use memtrace viewer.
+
+## Hacking Days
+
+Memtrace Viewer as a Website.
+
+Package up the core of memtrace viewer as a MirageOS application using
+Dream or Raw HTTP/2. The front end is using Bonsai plus websockets with
+some common data types for communication between client / server.
+
+```
+         +--------------+           +--------------+
+         |              |           |              |
+-------->| JSOO/Bonsai  +---------->| Dream/LWT    |
+http1/ssl|              | websocket |              |
+         |              |           | MirageOS     |
+         |              |           |              |
+         |              |           | Unix process |
+         +--------------+           +--------------+
+```
+
+Layout:
+ * mirage - Packaging of Dream into a Unikernel
+ * server - memtrace server logic for processing CTF files
+ * client - Bonsai/JSOO application
+ * common - shared logic and types
+ * test - test code
